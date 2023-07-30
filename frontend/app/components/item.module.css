@@ -1,0 +1,32 @@
+.item {
+  display: flex;
+  background-color: aqua;
+  justify-content: space-between;
+  padding: 0.8rem;
+  background-color: white;
+  gap: 10px;
+}
+
+.item p {
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
+.btnsContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.deleteBtn,
+.editBtn {
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background-color: red;
+  fill: white;
+}
+.editBtn:hover {
+  background-color: darkgray;
+  fill: white;
+}
