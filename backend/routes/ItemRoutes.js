@@ -21,10 +21,10 @@ router.post("/", createNewItem)
 // Get a SINGLE Item | endpoint: /api/items/:id
 router.get("/:id", getSingleItem)
 
-// Update a Item | endpoint: /api/items/:id
+// Update an Item | endpoint: /api/items/:id
 router.patch("/:id", updateItem)
 
-// Delete a Item | endpoint: /api/items/:id
+// Delete an Item | endpoint: /api/items/:id
 router.delete("/:id", deleteItem)
 
 module.exports = router
