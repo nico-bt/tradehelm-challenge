@@ -13,7 +13,7 @@ const cookieParser = require("cookie-parser") // Add cookie to res, req objects.
 app.use(cookieParser())
 
 const path = require("path")
-// const requireAuth = require("./middleware/authMiddleware")
+const requireAuth = require("./middleware/authMiddleware")
 
 //Cors and json, and middleware
 var cors = require("cors")
@@ -32,7 +32,7 @@ app.use(limiter)
 
 //Routes
 app.use("/api/user", require("./routes/userRoutes"))
-// app.use("/api/supermarket-items", requireAuth, require("./routes/itemsRoutes"))
+app.use("/api/items", requireAuth, require("./routes/itemRoutes"))
 
 // For production - Serving the frontend
 // --------------------------------------------------------------------
