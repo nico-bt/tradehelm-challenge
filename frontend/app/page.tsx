@@ -9,7 +9,7 @@ export default function Home() {
   const [open, setOpen] = useState(false)
 
   return (
-    <main className={styles.main}>
+    <>
       <h1>Supermarket List</h1>
 
       <div className={styles.itemsContainer}>
@@ -23,6 +23,6 @@ export default function Home() {
       </div>
 
       <AddItemModal open={open} setOpen={setOpen} />
-    </main>
+    </>
   )
 }
