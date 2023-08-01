@@ -1,10 +1,11 @@
 "use client"
-import React from "react"
+import React, { useEffect } from "react"
 import style from "./style.module.css"
-import { useContext, useEffect, useRef } from "react"
+import { useContext } from "react"
 import { useState } from "react"
 import Link from "next/link"
-// import { UserContext } from "../../context/UserContext"
+import { UserContext } from "../context/UserContext"
+import { useRouter } from "next/navigation"
 
 export default function LoginPage() {
   const [email, setEmail] = useState("")
@@ -12,14 +13,11 @@ export default function LoginPage() {
   const [loginError, setLoginError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // const { login } = useContext(UserContext)
+  const { login, user } = useContext(UserContext)
 
-  const emailInputRef = useRef()
-  useEffect(() => {
-    emailInputRef.current.focus()
-  }, [])
+  const router = useRouter()
 
-  // Handle submit signup
+  // Handle submit login
   //---------------------------------------
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -30,13 +28,20 @@ export default function LoginPage() {
     }
 
     setLoading(true)
-    // const err = await signup({ email, password })
+    const err = await login({ email, password })
     if (err) {
       setLoginError(err)
     }
     setPassword("")
     setLoading(false)
   }
+
+  // Redirect to home if user is logged in
+  useEffect(() => {
+    if (user) {
+      router.push("/")
+    }
+  }, [user])
 
   return (
     <form onSubmit={handleSubmit} className={style.signup} id="signup-form">
@@ -51,7 +56,7 @@ export default function LoginPage() {
         id="login-email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        ref={emailInputRef}
+        autoFocus
       />
 
       <label htmlFor="login-password">Password</label>

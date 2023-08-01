@@ -1,10 +1,11 @@
 "use client"
 import React from "react"
 import style from "./style.module.css"
-import { useContext, useEffect, useRef } from "react"
+import { useEffect, useContext } from "react"
 import { useState } from "react"
 import Link from "next/link"
-// import { UserContext } from "../../context/UserContext"
+import { UserContext } from "../context/UserContext"
+import { useRouter } from "next/navigation"
 
 export default function SignupPage() {
   const [email, setEmail] = useState("")
@@ -12,12 +13,16 @@ export default function SignupPage() {
   const [signupError, setSignupError] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // const { signup } = useContext(UserContext)
+  const { signup, user } = useContext(UserContext)
 
-  const emailInputRef = useRef()
+  const router = useRouter()
+
+  // Redirect to home if user is logged in
   useEffect(() => {
-    emailInputRef.current.focus()
-  }, [])
+    if (user) {
+      router.push("/")
+    }
+  }, [user])
 
   // Handle submit signup
   //---------------------------------------
@@ -30,7 +35,7 @@ export default function SignupPage() {
     }
 
     setLoading(true)
-    // const err = await signup({ email, password })
+    const err = await signup({ email, password })
     if (err) {
       setSignupError(err)
     }
@@ -51,7 +56,6 @@ export default function SignupPage() {
         id="signup-email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
-        ref={emailInputRef}
       />
 
       <label htmlFor="signup-password">Password</label>
