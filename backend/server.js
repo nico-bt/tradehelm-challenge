@@ -8,17 +8,13 @@ const app = express()
 //Database
 const mongoose = require("mongoose")
 
-//Cookies
-const cookieParser = require("cookie-parser") // Add cookie to res, req objects. res.cookie() to set one. req.cookies() to get them.
-app.use(cookieParser())
-
-const path = require("path")
-const requireAuth = require("./middleware/authMiddleware")
-
 //Cors and json, and middleware
 var cors = require("cors")
 app.use(cors())
 app.use(express.json())
+
+const path = require("path")
+const requireAuth = require("./middleware/authMiddleware")
 
 // Limiting number of request to the API
 const rateLimit = require("express-rate-limit")

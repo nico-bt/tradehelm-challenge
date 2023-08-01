@@ -14,10 +14,10 @@ function createToken(id) {
 // Controllers
 // *******************************************************************************
 
-// Check if user is logged in. To enable React check in cookie containing jwt
+// Return User data
 //-----------------------------------------------------------------------------
 const getUser = async (req, res) => {
-  const userToken = req.cookies.jwt
+  const userToken = req.userToken
   if (userToken) {
     const { id } = jwt.verify(userToken, process.env.JWT_SECRET)
     // With the retrieved id from token, check if user exists in database
@@ -52,14 +52,14 @@ const createNewUser = async (req, res) => {
     let user = await User.create({ email, password }) //Obs: Password is hashed in the User Model before saving in db
 
     const token = createToken(user._id)
-    res.cookie("jwt", token, { httpOnly: true, maxAge: daysInSecs * 1000 })
 
     //Remove password for returning it. Although it is hashed in User model
     user.password = undefined
 
-    return res.status(201).json(user)
+    return res.status(201).json({ user, userToken: token })
   } catch (error) {
     if (error.code == 11000) {
+      // Error code comes from the User Model definition in mongoDb with email as unique
       return res.status(400).json({ error: `${email} is already registered` })
     }
 
@@ -87,9 +87,8 @@ const loginUser = async (req, res) => {
 
     if (auth) {
       const token = createToken(user._id)
-      res.cookie("jwt", token, { httpOnly: true, maxAge: daysInSecs * 1000 })
       user.password = undefined
-      return res.json(user)
+      return res.json({ user, userToken: token })
     } else {
       return res.status(400).json({ error: "Wrong password" })
     }
@@ -98,11 +97,4 @@ const loginUser = async (req, res) => {
   }
 }
 
-// LOGOUT user
-//-----------------------------------------------------------------------------
-const logoutUser = (req, res) => {
-  res.cookie("jwt", "", { httpOnly: true, maxAge: 1 })
-  return res.json({ msg: "Logged out" })
-}
-
-module.exports = { getUser, createNewUser, loginUser, logoutUser }
+module.exports = { getUser, createNewUser, loginUser }
