@@ -99,7 +99,11 @@ const updateItem = async (req, res) => {
     if (!itemData) {
       return res.status(400).json("Enter an Item")
     }
-    const updatedItem = await Item.findByIdAndUpdate(req.params.id, { itemData }, { new: true })
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      { item: itemData },
+      { new: true }
+    )
     res.status(200).json(updatedItem)
   } catch (error) {
     res.status(400).json(error)
