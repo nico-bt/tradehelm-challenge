@@ -25,29 +25,27 @@ const style = {
   gap: 2,
 }
 
-export default function AddItemModal({ open, setOpen }) {
+export default function EditItemModal({ open, setOpen, itemData }) {
   const { user } = useContext(UserContext)
-  const { addItem } = useContext(ItemsContext)
+  const { editItem } = useContext(ItemsContext)
 
-  const [newItem, setNewItem] = useState("")
+  const [newItem, setNewItem] = useState(itemData.item)
   const [error, setError] = useState(null)
 
   const handleClose = () => {
     setError(null)
-    setNewItem("")
     setOpen(false)
   }
 
-  const handleAddItem = async (e) => {
+  const handleEditItem = async (e) => {
     e.preventDefault()
     if (!newItem) {
       return
     }
-    const error = await addItem(newItem)
+    const error = await editItem({ id: itemData._id, newItem })
     if (error) {
       setError(error)
     } else {
-      setNewItem("")
       setOpen(false)
       setError(null)
     }
@@ -65,7 +63,7 @@ export default function AddItemModal({ open, setOpen }) {
           {error && <Alert severity="error">Sorry. Something went wrong. Try again</Alert>}
 
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add Item
+            Edit Item
           </Typography>
 
           <Box component="form" noValidate autoComplete="off">
@@ -82,8 +80,8 @@ export default function AddItemModal({ open, setOpen }) {
               <Button variant="text" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="contained" onClick={handleAddItem} type="submit">
-                Add
+              <Button variant="contained" onClick={handleEditItem} type="submit" color="warning">
+                Edit
               </Button>
             </Stack>
           </Box>
