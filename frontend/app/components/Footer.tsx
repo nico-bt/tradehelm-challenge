@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer>
       <div>
-        Challenge hecho con ❤ por{" "}
+        Challenge hecho con <span style={{ color: "red" }}>❤</span> por{" "}
         <a
           href="https://www.linkedin.com/in/nico-battaglia/"
           target="_blank"
