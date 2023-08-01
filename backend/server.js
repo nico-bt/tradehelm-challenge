@@ -26,7 +26,7 @@ const limiter = rateLimit({
 })
 app.use(limiter)
 
-//Routes
+//Routes -
 app.use("/api/user", require("./routes/userRoutes"))
 app.use("/api/items", requireAuth, require("./routes/itemRoutes"))
 
