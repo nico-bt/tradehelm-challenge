@@ -1,10 +1,15 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
 
+interface UserType {
+  email: string
+  token: string
+}
+
 export const UserContext = createContext()
 
 export const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState<UserType | null>(null)
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -22,7 +27,7 @@ export const UserContextProvider = ({ children }) => {
 
   // Signup
   //-----------------------------------------------------------------------------
-  const signup = async ({ email, password }) => {
+  const signup = async ({ email, password }: { email: string; password: string }) => {
     try {
       const response = await fetch(`http://localhost:8000/api/user/signup`, {
         method: "POST",
@@ -53,7 +58,7 @@ export const UserContextProvider = ({ children }) => {
 
   // Login
   //-----------------------------------------
-  const login = async ({ email, password }) => {
+  const login = async ({ email, password }: { email: string; password: string }) => {
     try {
       const response = await fetch(`http://localhost:8000/api/user/login`, {
         method: "POST",

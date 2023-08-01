@@ -6,7 +6,13 @@ import styles from "./item.module.css"
 import { ItemsContext } from "../context/ItemsContext"
 import EditItemModal from "./EditItemModal"
 
-export default function Item({ itemData }) {
+export interface ItemType {
+  item: string
+  _id: string
+  user: string
+}
+
+export default function Item({ itemData }: { itemData: ItemType }) {
   const { deleteItem } = useContext(ItemsContext)
   const [openEditModal, setOpenEditModal] = useState(false)
 
