@@ -17,22 +17,8 @@ function createToken(id) {
 // Return User data
 //-----------------------------------------------------------------------------
 const getUser = async (req, res) => {
-  const userToken = req.userToken
-  if (userToken) {
-    const { id } = jwt.verify(userToken, process.env.JWT_SECRET)
-    // With the retrieved id from token, check if user exists in database
-    try {
-      let user = await User.findById(id)
-      if (user) {
-        user.password = undefined
-        return res.json(user)
-      }
-    } catch (error) {
-      return res.status(400).json(error)
-    }
-  } else {
-    return res.json(null)
-  }
+  // user extracted with authMiddleware
+  return res.json(req.user)
 }
 
 // Create New user when signup

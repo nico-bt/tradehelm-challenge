@@ -4,9 +4,10 @@ const mongoose = require("mongoose")
 
 // Controllers
 const { getUser, createNewUser, loginUser } = require("../controllers/userControllers")
+const requireAuth = require("../middleware/authMiddleware")
 
 // GET user info | endpoint: api/user
-router.get("/", getUser)
+router.get("/", requireAuth, getUser)
 
 // CREATE a New User | endpoint: api/user/signup
 router.post("/signup", createNewUser)
