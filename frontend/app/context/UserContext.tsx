@@ -29,7 +29,7 @@ export const UserContextProvider = ({ children }) => {
   //-----------------------------------------------------------------------------
   const signup = async ({ email, password }: { email: string; password: string }) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/user/signup`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/signup`, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },
@@ -61,7 +61,7 @@ export const UserContextProvider = ({ children }) => {
   //-----------------------------------------
   const login = async ({ email, password }: { email: string; password: string }) => {
     try {
-      const response = await fetch(`http://localhost:8000/api/user/login`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/user/login`, {
         method: "POST",
         body: JSON.stringify({ email, password }),
         headers: { "Content-Type": "application/json" },

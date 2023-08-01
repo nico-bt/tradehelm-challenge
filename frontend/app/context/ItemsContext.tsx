@@ -29,7 +29,7 @@ export function ItemsContextProvider({ children }) {
   const getAllItems = async () => {
     setItemsApiError(false)
     try {
-      const response = await fetch(`http://localhost:8000/api/items`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/items`, {
         headers: {
           Authorization: `Bearer ${user?.token}`,
         },
@@ -56,7 +56,7 @@ export function ItemsContextProvider({ children }) {
 
   const addItem = async (newItem: string) => {
     try {
-      const response = await fetch("http://localhost:8000/api/items", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/items`, {
         method: "POST",
         body: JSON.stringify({ itemData: newItem }),
         headers: {
@@ -78,13 +78,16 @@ export function ItemsContextProvider({ children }) {
 
   const deleteItem = async (itemToDelete: ItemType) => {
     try {
-      const response = await fetch("http://localhost:8000/api/items/" + itemToDelete._id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user?.token}`,
-        },
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL_API}/items/` + itemToDelete._id,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      )
       if (response.ok) {
         setItems((prevItems) => prevItems.filter((item) => item._id !== itemToDelete._id))
       } else {
@@ -97,7 +100,7 @@ export function ItemsContextProvider({ children }) {
 
   const editItem = async ({ id, newItem }: { id: string; newItem: string }) => {
     try {
-      const response = await fetch("http://localhost:8000/api/items/" + id, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/items/` + id, {
         method: "PATCH",
         body: JSON.stringify({ itemData: newItem }),
         headers: {
