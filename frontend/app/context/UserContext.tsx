@@ -1,14 +1,32 @@
 "use client"
 import { createContext, useEffect, useState } from "react"
 
-interface UserType {
+export interface UserType {
   email: string
   token: string
 }
 
-export const UserContext = createContext()
+interface UserContextType {
+  user: UserType | null
+  isLoading: boolean
+  error: boolean | string
+  signup: (credentials: { email: string; password: string }) => Promise<string | undefined>
+  login: (credentials: { email: string; password: string }) => Promise<string | undefined>
+  logout: () => void
+  resetError: () => void
+}
 
-export const UserContextProvider = ({ children }) => {
+export const UserContext = createContext<UserContextType>({
+  user: null,
+  isLoading: true,
+  error: false,
+  signup: async () => undefined,
+  login: async () => undefined,
+  logout: () => {},
+  resetError: () => {},
+})
+
+export const UserContextProvider = ({ children }: { children: any }) => {
   const [user, setUser] = useState<UserType | null>(null)
   const [error, setError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
@@ -50,7 +68,7 @@ export const UserContextProvider = ({ children }) => {
         return json.error
       }
     } catch (err) {
-      setError(err)
+      // setError(err)
       return "Connection problem. Try again please"
     } finally {
       setIsLoading(false)
@@ -83,7 +101,7 @@ export const UserContextProvider = ({ children }) => {
         return json.error
       }
     } catch (err) {
-      setError(err)
+      // setError(err)
       return "Connection problem. Try again please"
     } finally {
       setIsLoading(false)

@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 
 import { useState, useContext } from "react"
-import { UserContext } from "../context/UserContext"
+import { UserContext, UserType } from "../context/UserContext"
 import { ItemsContext } from "../context/ItemsContext"
 import { Alert } from "@mui/material"
 
@@ -25,7 +25,13 @@ const style = {
   gap: 2,
 }
 
-export default function AddItemModal({ open, setOpen }) {
+export default function AddItemModal({
+  open,
+  setOpen,
+}: {
+  open: boolean
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const { user } = useContext(UserContext)
   const { addItem } = useContext(ItemsContext)
 
@@ -38,7 +44,7 @@ export default function AddItemModal({ open, setOpen }) {
     setOpen(false)
   }
 
-  const handleAddItem = async (e) => {
+  const handleAddItem = async (e: React.MouseEvent) => {
     e.preventDefault()
     if (!newItem) {
       return

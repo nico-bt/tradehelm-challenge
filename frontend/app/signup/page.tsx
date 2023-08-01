@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation"
 export default function SignupPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [signupError, setSignupError] = useState(false)
+  const [signupError, setSignupError] = useState("")
   const [loading, setLoading] = useState(false)
 
   const { signup, user } = useContext(UserContext)

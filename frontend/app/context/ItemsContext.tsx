@@ -13,12 +13,14 @@ export const ItemsContext = createContext<{
   addItem: (newItem: string) => Promise<any>
   deleteItem: (itemToDelete: ItemType) => Promise<any>
   editItem: ({ id, newItem }: { id: string; newItem: string }) => Promise<any>
+  itemsApiError: boolean
 }>({
   items: [],
   getAllItems: async () => {}, // Func vacía, ya que el tipo de retorno es "any"
   addItem: async (newItem: string) => {},
   deleteItem: async (itemToDelete: ItemType) => {},
   editItem: async ({ id, newItem }: { id: string; newItem: string }) => {},
+  itemsApiError: false,
 })
 
 export function ItemsContextProvider({ children }) {
