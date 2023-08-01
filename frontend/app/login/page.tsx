@@ -69,7 +69,7 @@ export default function LoginPage() {
       />
 
       <button className={style.submit} disabled={loading}>
-        Log In
+        {loading ? "Loading..." : "Log In"}
       </button>
 
       <div className={style.signupChange}>

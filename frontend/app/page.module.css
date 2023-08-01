@@ -33,3 +33,9 @@
   padding: 24px 6px;
   text-align: center;
 }
+
+.errorConnection {
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}

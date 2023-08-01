@@ -68,7 +68,7 @@ export default function SignupPage() {
       />
 
       <button className={style.submit} disabled={loading}>
-        Sign up
+        {loading ? "Loading..." : "Sign Up"}
       </button>
 
       <div className={style.signupChange}>

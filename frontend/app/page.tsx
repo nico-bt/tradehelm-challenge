@@ -10,7 +10,7 @@ import { ItemsContext } from "./context/ItemsContext"
 
 export default function Home() {
   const { user, isLoading, error } = useContext(UserContext)
-  const { items } = useContext(ItemsContext)
+  const { items, itemsApiError } = useContext(ItemsContext)
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
@@ -29,8 +29,13 @@ export default function Home() {
     return <h1>Loading...</h1>
   }
 
-  if (error) {
-    return <h1>Ups... Something went wrong. Please try again</h1>
+  if (error || itemsApiError) {
+    return (
+      <h1 className={styles.errorConnection}>
+        <span>Ups... Something went wrong with the connection.</span>
+        <span>Please try again</span>
+      </h1>
+    )
   }
 
   if (user) {

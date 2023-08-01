@@ -51,6 +51,7 @@ export const UserContextProvider = ({ children }) => {
       }
     } catch (err) {
       setError(err)
+      return "Connection problem. Try again please"
     } finally {
       setIsLoading(false)
     }
@@ -79,11 +80,11 @@ export const UserContextProvider = ({ children }) => {
         }
       } else {
         const json = await response.json()
-        // setError(json.error)
         return json.error
       }
     } catch (err) {
       setError(err)
+      return "Connection problem. Try again please"
     } finally {
       setIsLoading(false)
     }

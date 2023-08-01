@@ -24,8 +24,10 @@ export const ItemsContext = createContext<{
 export function ItemsContextProvider({ children }) {
   const { user } = useContext(UserContext)
   const [items, setItems] = useState<ItemType[]>([])
+  const [itemsApiError, setItemsApiError] = useState(false)
 
   const getAllItems = async () => {
+    setItemsApiError(false)
     try {
       const response = await fetch(`http://localhost:8000/api/items`, {
         headers: {
@@ -41,6 +43,7 @@ export function ItemsContextProvider({ children }) {
         throw new Error()
       }
     } catch (err) {
+      setItemsApiError(true)
       return err
     }
   }
@@ -114,7 +117,9 @@ export function ItemsContextProvider({ children }) {
   }
 
   return (
-    <ItemsContext.Provider value={{ items, getAllItems, addItem, deleteItem, editItem }}>
+    <ItemsContext.Provider
+      value={{ items, getAllItems, addItem, deleteItem, editItem, itemsApiError }}
+    >
       {children}
     </ItemsContext.Provider>
   )
