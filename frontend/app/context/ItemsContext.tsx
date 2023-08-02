@@ -14,6 +14,7 @@ export const ItemsContext = createContext<{
   deleteItem: (itemToDelete: ItemType) => Promise<any>
   editItem: ({ id, newItem }: { id: string; newItem: string }) => Promise<any>
   itemsApiError: boolean
+  loadingItems: boolean
 }>({
   items: [],
   getAllItems: async () => {}, // Func vacía, ya que el tipo de retorno es "any"
@@ -21,15 +22,18 @@ export const ItemsContext = createContext<{
   deleteItem: async (itemToDelete: ItemType) => {},
   editItem: async ({ id, newItem }: { id: string; newItem: string }) => {},
   itemsApiError: false,
+  loadingItems: false,
 })
 
 export function ItemsContextProvider({ children }) {
   const { user } = useContext(UserContext)
   const [items, setItems] = useState<ItemType[]>([])
+  const [loadingItems, setLoadingItems] = useState(true)
   const [itemsApiError, setItemsApiError] = useState(false)
 
   const getAllItems = async () => {
     setItemsApiError(false)
+    setLoadingItems(true)
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL_API}/items`, {
         headers: {
@@ -47,6 +51,8 @@ export function ItemsContextProvider({ children }) {
     } catch (err) {
       setItemsApiError(true)
       return err
+    } finally {
+      setLoadingItems(false)
     }
   }
 
@@ -123,7 +129,7 @@ export function ItemsContextProvider({ children }) {
 
   return (
     <ItemsContext.Provider
-      value={{ items, getAllItems, addItem, deleteItem, editItem, itemsApiError }}
+      value={{ items, getAllItems, addItem, deleteItem, editItem, itemsApiError, loadingItems }}
     >
       {children}
     </ItemsContext.Provider>

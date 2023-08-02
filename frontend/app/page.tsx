@@ -10,7 +10,7 @@ import { ItemsContext } from "./context/ItemsContext"
 
 export default function Home() {
   const { user, isLoading, error } = useContext(UserContext)
-  const { items, itemsApiError } = useContext(ItemsContext)
+  const { items, itemsApiError, loadingItems } = useContext(ItemsContext)
   const [open, setOpen] = useState(false)
 
   const router = useRouter()
@@ -53,8 +53,14 @@ export default function Home() {
             items.map((item) => <Item key={item._id} itemData={item} />)
           ) : (
             <div className={styles.emptyList}>
-              <p>Empty list</p>
-              <p>Add your items</p>
+              {loadingItems ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  <p>Empty list</p>
+                  <p>Add your items</p>
+                </>
+              )}
             </div>
           )}
 
