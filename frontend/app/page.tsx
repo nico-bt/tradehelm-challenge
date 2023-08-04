@@ -15,7 +15,7 @@ export default function Home() {
 
   const router = useRouter()
 
-  // If there is no user credentials (a jwt is set on a cookie), redirect to signup.
+  // If there is no user credentials, redirect to signup.
   //-----------------------------------------------------------------------------------
   useEffect(() => {
     if (!isLoading) {
